@@ -1,9 +1,11 @@
-package com.janblog.controller;
+package com.janblog.controller.v1;
 
 import com.janblog.model.User;
 import com.janblog.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -27,6 +29,11 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody User user) {
+        Optional<User> usr = userRepo.findById(user.getId());
+
+        if (usr.isEmpty()) {
+            return ResponseEntity.ok("the user doesn't exist");
+        }
         return ResponseEntity.ok(userRepo.save(user));
     }
 
