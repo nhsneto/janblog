@@ -1,18 +1,14 @@
 package com.janblog.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.Instant;
 
-import java.util.Date;
-
-@Document
 public class Comment {
 
-    @Id
     private String id;
     private String userId;
     private String text;
-    private Date date;
+    private Long likes;
+    private Instant date;
 
     public String getId() {
         return id;
@@ -38,11 +34,19 @@ public class Comment {
         this.text = text;
     }
 
-    public Date getDate() {
+    public Long getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Long likes) {
+        this.likes = likes;
+    }
+
+    public Instant getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Instant date) {
         this.date = date;
     }
 }

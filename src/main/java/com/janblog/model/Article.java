@@ -3,9 +3,10 @@ package com.janblog.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Instant;
 import java.util.List;
 
-@Document
+@Document("articles")
 public class Article {
 
     @Id
@@ -14,6 +15,8 @@ public class Article {
     private String body;
     private String userId;
     private Long likes;
+    private Instant createdAt;
+    private Instant updatedAt;
     private List<Comment> comments;
 
     public String getId() {
@@ -56,11 +59,35 @@ public class Article {
         this.likes = likes;
     }
 
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     public List<Comment> getComments() {
         return comments;
     }
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
+
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
     }
 }
