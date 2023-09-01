@@ -1,45 +1,51 @@
 package com.janblog.controller.v1;
 
 import com.janblog.model.User;
-import com.janblog.repository.UserRepository;
+import com.janblog.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
-@RequestMapping("/users")
+@RequestMapping("janblog/v1/users")
 public class UserController {
 
-    private final UserRepository userRepo;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepo) {
-        this.userRepo = userRepo;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public ResponseEntity<?> findAll() {
-        return ResponseEntity.ok(userRepo.findAll());
+        return ResponseEntity.ok(userService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable String id) {
+        User user = userService.findById(id);
+        if (user == null) {
+            return ResponseEntity.ok("");
+        }
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody User user) {
-        return ResponseEntity.ok(userRepo.save(user));
+        return ResponseEntity.ok(userService.save(user));
     }
 
-    @PutMapping
-    public ResponseEntity<?> update(@RequestBody User user) {
-        Optional<User> usr = userRepo.findById(user.getId());
-
-        if (usr.isEmpty()) {
-            return ResponseEntity.ok("the user doesn't exist");
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody User user) {
+        User u = userService.update(id, user);
+        if (u == null) {
+            return ResponseEntity.ok("");
         }
-        return ResponseEntity.ok(userRepo.save(user));
+        return ResponseEntity.ok(u);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable String id) {
-        userRepo.deleteById(id);
-        return ResponseEntity.ok().body("deleted");
+        userService.deleteById(id);
+        return ResponseEntity.ok().body("");
     }
 }
