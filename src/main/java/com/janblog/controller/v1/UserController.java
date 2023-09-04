@@ -2,6 +2,7 @@ package com.janblog.controller.v1;
 
 import com.janblog.model.User;
 import com.janblog.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,21 +25,23 @@ public class UserController {
     public ResponseEntity<?> findById(@PathVariable String id) {
         User user = userService.findById(id);
         if (user == null) {
-            return ResponseEntity.ok("");
+            return ResponseEntity.ok().build();
         }
         return ResponseEntity.ok(user);
     }
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody User user) {
-        return ResponseEntity.ok(userService.save(user));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(userService.save(user));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody User user) {
         User u = userService.update(id, user);
         if (u == null) {
-            return ResponseEntity.ok("");
+            return ResponseEntity.ok().build();
         }
         return ResponseEntity.ok(u);
     }
@@ -46,6 +49,6 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable String id) {
         userService.deleteById(id);
-        return ResponseEntity.ok().body("");
+        return ResponseEntity.noContent().build();
     }
 }
