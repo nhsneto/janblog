@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -24,7 +25,7 @@ public class UserService {
 
     public User findById(String id) {
         Optional<User> opt = userRepo.findById(id);
-        return opt.orElse(null);
+        return opt.orElseThrow(() -> new NoSuchElementException("User with id=" + id + " was not found."));
     }
 
     public User save(User user) {
@@ -35,12 +36,7 @@ public class UserService {
     }
 
     public User update(String id, User updated) {
-        Optional<User> opt = userRepo.findById(id);
-        if (opt.isEmpty()) {
-            return null;
-        }
-
-        User user = opt.get();
+        User user = findById(id);
         user.setUsername(updated.getUsername());
         user.setPassword(updated.getPassword());
         user.setRole(Role.usr);
