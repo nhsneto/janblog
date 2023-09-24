@@ -17,6 +17,19 @@ public class User {
     private Instant createdAt;
     private Instant updatedAt;
 
+    public User() {
+    }
+
+    public User(String id, String username, String email, String password, Role role, Instant createdAt, Instant updatedAt) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     public String getId() {
         return id;
     }
