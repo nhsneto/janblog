@@ -31,7 +31,7 @@ class UserServiceTest {
         LOG.info("Executing UserService tests");
 
         String dbName = "janblog-test";
-        ConnectionString cs = new ConnectionString("mongodb://localhost:27017/" + dbName);
+        ConnectionString cs = new ConnectionString("mongodb://root:root@localhost:27017/" + dbName);
         mongoTemplate = new MongoTemplate(MongoClients.create(cs), dbName);
     }
 
