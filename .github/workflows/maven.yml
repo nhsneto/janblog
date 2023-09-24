@@ -16,9 +16,9 @@ on:
 
 jobs:
 
-  container-job:
+  build:
+
     runs-on: ubuntu-latest
-    container: mongo
 
     services:
       mongo:
@@ -27,10 +27,6 @@ jobs:
           - "27017:27017"
         volumes:
           - /home/mongo/data/db
-
-  build:
-
-    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
