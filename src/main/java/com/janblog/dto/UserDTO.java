@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Size;
 import java.time.Instant;
 
 public record UserDTO(
+        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         String id,
         @NotNull(message = "{com.janblog.dto.UserDTO.username.notnull.msg}")
         @Size(min = 6, max = 30, message = "{com.janblog.dto.UserDTO.username.size.msg}")
@@ -20,12 +21,13 @@ public record UserDTO(
                 message = "{com.janblog.dto.UserDTO.email.error.msg}")
         String email,
         @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-        @NotNull(message = "{com.janblog.dto.UserDTO.password.notnull.msg}")
         @Size(min = 8, max = 128, message = "{com.janblog.dto.UserDTO.password.size.msg}")
         @Pattern(regexp = "^[\\p{ASCII}]{8,128}$", message = "{com.janblog.dto.UserDTO.password.pattern.msg}")
         String password,
         @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         Role role,
+        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         Instant createdAt,
+        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         Instant updatedAt) {
 }
