@@ -70,4 +70,16 @@ class UserServiceTest {
         List<UserDTO> users = userService.findAll();
         assertThat(users).isNotEmpty();
     }
+    
+    @Test
+    public void shouldNotBeNull() {
+        List<UserDTO> users = userService.findAll();
+        assertThat(users).isNotNull();
+    }
+    
+    @Test
+    public void shouldContain5Users() {
+        List<UserDTO> users = userService.findAll();
+        assertThat(users).hasSize(5);
+    }
 }
