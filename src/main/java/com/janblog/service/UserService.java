@@ -27,11 +27,12 @@ public class UserService {
 
     public UserDTO findById(String id) {
         User user = userRepo.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("User with id=" + id + " was not found."));
+                .orElseThrow(() -> new NoSuchElementException("User with id=" + id + " was not found"));
         return UserMapper.toUserDTO(user);
     }
 
     public UserDTO save(UserDTO dto) {
+        Objects.requireNonNull(dto.password(), "Password must not be null");
         User user = UserMapper.toUser(dto);
         user.setRole(Role.usr);
         user.setCreatedAt(Instant.now());
