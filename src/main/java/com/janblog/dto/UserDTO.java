@@ -24,6 +24,7 @@ public record UserDTO(
         @Size(min = 8, max = 128, message = "{com.janblog.dto.UserDTO.password.size.msg}")
         @Pattern(regexp = "^[\\p{ASCII}]{8,128}$", message = "{com.janblog.dto.UserDTO.password.pattern.msg}")
         String password,
+        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         Role role,
         Instant createdAt,
         Instant updatedAt) {
