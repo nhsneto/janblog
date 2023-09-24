@@ -54,16 +54,16 @@ class UserServiceTest {
         }
     }
 
-    @AfterEach
-    public void dropCollection() {
-        mongoTemplate.getCollection("users").drop();
-    }
+    // @AfterEach
+    // public void dropCollection() {
+    //     mongoTemplate.getCollection("users").drop();
+    // }
 
-    @AfterAll
-    public static void dropDb() {
-        LOG.info("Finished executing UserService tests");
-        mongoTemplate.getDb().drop();
-    }
+    // @AfterAll
+    // public static void dropDb() {
+    //     LOG.info("Finished executing UserService tests");
+    //     mongoTemplate.getDb().drop();
+    // }
 
     @Test
     public void shouldReturnAListOfAllUsers() {
