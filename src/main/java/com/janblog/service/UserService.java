@@ -1,5 +1,7 @@
 package com.janblog.service;
 
+import com.janblog.dto.UserDTO;
+import com.janblog.mapper.UserMapper;
 import com.janblog.model.Role;
 import com.janblog.model.User;
 import com.janblog.repository.UserRepository;
@@ -8,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.Objects;
 
 @Service
 public class UserService {
@@ -19,32 +21,34 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public List<User> findAll() {
-        return userRepo.findAll();
+    public List<UserDTO> findAll() {
+        return UserMapper.toUserDTOList(userRepo.findAll());
     }
 
-    public User findById(String id) {
-        Optional<User> opt = userRepo.findById(id);
-        return opt.orElseThrow(() -> new NoSuchElementException("User with id=" + id + " was not found."));
+    public UserDTO findById(String id) {
+        User user = userRepo.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("User with id=" + id + " was not found."));
+        return UserMapper.toUserDTO(user);
     }
 
-    public User save(User user) {
+    public UserDTO save(UserDTO dto) {
+        User user = UserMapper.toUser(dto);
         user.setRole(Role.usr);
         user.setCreatedAt(Instant.now());
         user.setUpdatedAt(Instant.now());
-        return userRepo.save(user);
+        return UserMapper.toUserDTO(userRepo.save(user));
     }
 
-    public User update(String id, User updated) {
-        User user = findById(id);
-        user.setUsername(updated.getUsername());
-        user.setPassword(updated.getPassword());
-        user.setRole(Role.usr);
+    public UserDTO update(String id, UserDTO updated) {
+        User user = UserMapper.toUser(findById(id));
+        user.setUsername(updated.username());
+        user.setEmail(updated.email());
         user.setUpdatedAt(Instant.now());
-        return userRepo.save(user);
+        return UserMapper.toUserDTO(userRepo.save(user));
     }
 
     public void deleteById(String id) {
+        findById(id);
         userRepo.deleteById(id);
     }
 }

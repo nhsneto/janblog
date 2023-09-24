@@ -1,5 +1,6 @@
 package com.janblog.service;
 
+import com.janblog.dto.UserDTO;
 import com.janblog.model.Role;
 import com.janblog.model.User;
 import com.mongodb.ConnectionString;
@@ -66,7 +67,7 @@ class UserServiceTest {
 
     @Test
     public void shouldReturnAListOfAllUsers() {
-        List<User> users = userService.findAll();
+        List<UserDTO> users = userService.findAll();
         assertThat(users).isNotEmpty();
     }
 }

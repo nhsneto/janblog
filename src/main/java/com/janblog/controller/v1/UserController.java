@@ -1,6 +1,6 @@
 package com.janblog.controller.v1;
 
-import com.janblog.model.User;
+import com.janblog.dto.UserDTO;
 import com.janblog.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,15 +27,15 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody User user) {
+    public ResponseEntity<?> save(@RequestBody UserDTO dto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(userService.save(user));
+                .body(userService.save(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody User user) {
-        return ResponseEntity.ok(userService.update(id, user));
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody UserDTO dto) {
+        return ResponseEntity.ok(userService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
