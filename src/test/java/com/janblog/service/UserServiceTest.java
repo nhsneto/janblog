@@ -6,8 +6,6 @@ import com.janblog.model.User;
 import com.mongodb.ConnectionString;
 import com.mongodb.client.MongoClients;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -23,13 +21,9 @@ class UserServiceTest {
     @Autowired
     private UserService userService;
     private static MongoTemplate mongoTemplate;
-    private static Logger LOG;
 
     @BeforeAll
     public static void initializeDb() {
-        LOG = LoggerFactory.getLogger(UserServiceTest.class);
-        LOG.info("Executing UserService tests");
-
         String dbName = "janblog-test";
         ConnectionString cs = new ConnectionString("mongodb://localhost:27017/" + dbName);
         mongoTemplate = new MongoTemplate(MongoClients.create(cs), dbName);
@@ -61,7 +55,6 @@ class UserServiceTest {
 
     @AfterAll
     public static void dropDb() {
-        LOG.info("Finished executing UserService tests");
         mongoTemplate.getDb().drop();
     }
 
