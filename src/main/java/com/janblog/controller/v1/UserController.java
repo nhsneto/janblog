@@ -2,6 +2,7 @@ package com.janblog.controller.v1;
 
 import com.janblog.dto.UserDTO;
 import com.janblog.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,14 +28,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody UserDTO dto) {
+    public ResponseEntity<?> save(@RequestBody @Valid UserDTO dto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(userService.save(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody UserDTO dto) {
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody @Valid UserDTO dto) {
         return ResponseEntity.ok(userService.update(id, dto));
     }
 
