@@ -68,6 +68,8 @@ class UserServiceTest {
     @Test
     public void shouldReturnAListOfAllUsers() {
         List<UserDTO> users = userService.findAll();
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + mongoTemplate.getDb().getName());
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + mongoTemplate.getCollectionName(User.class));
         assertThat(users).isNotEmpty();
     }
     
