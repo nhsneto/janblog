@@ -54,7 +54,7 @@ class UserServiceTest {
         }
 
         List<UserDTO> users = userService.findAll();
-        assertThat(users).hasSize(5);
+        assertThat(users).hasSize(5);     
     }
 
     // @BeforeEach
