@@ -14,9 +14,10 @@ on:
   pull_request:
     branches: [ "main" ]
 
-jobs:
-  mongodb-job:
+jobs:  
+  build:
     runs-on: ubuntu-latest
+
     services:
       mongodb:
         image: mongo:latest
@@ -24,10 +25,7 @@ jobs:
           - "27017:27017"
         volumes:
           - ~/data/db
-  
-  build:
-    needs: mongodb-job
-    runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
