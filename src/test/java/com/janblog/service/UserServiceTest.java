@@ -35,8 +35,8 @@ class UserServiceTest {
         mongoTemplate = new MongoTemplate(MongoClients.create(cs), dbName);
     }
 
-    @BeforeEach
-    public void populateDb() {
+    @Test
+    public void tryingToUnderstand() {
         int NUMBER_OF_USERS = 5;
         String[] names = {"stengerald", "ferdonanda", "danilojosef", "romanlauren", "branislavignas"};
         String[] emails = {"stengerald@email.com", "ferdonanda@email.com", "danilojosef@email.com",
@@ -52,36 +52,58 @@ class UserServiceTest {
             user.setUpdatedAt(Instant.now());
             mongoTemplate.insert(user);
         }
-    }
 
-    @AfterEach
-    public void dropCollection() {
-        mongoTemplate.getCollection("users").drop();
-    }
-
-    @AfterAll
-    public static void dropDb() {
-        LOG.info("Finished executing UserService tests");
-        mongoTemplate.getDb().drop();
-    }
-
-    @Test
-    public void shouldReturnAListOfAllUsers() {
-        List<UserDTO> users = userService.findAll();
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + mongoTemplate.getDb().getName());
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + mongoTemplate.getCollectionName(User.class));
-        assertThat(users).isNotEmpty();
-    }
-    
-    @Test
-    public void shouldNotBeNull() {
-        List<UserDTO> users = userService.findAll();
-        assertThat(users).isNotNull();
-    }
-    
-    @Test
-    public void shouldContain5Users() {
         List<UserDTO> users = userService.findAll();
         assertThat(users).hasSize(5);
     }
+
+    // @BeforeEach
+    // public void populateDb() {
+    //     int NUMBER_OF_USERS = 5;
+    //     String[] names = {"stengerald", "ferdonanda", "danilojosef", "romanlauren", "branislavignas"};
+    //     String[] emails = {"stengerald@email.com", "ferdonanda@email.com", "danilojosef@email.com",
+    //             "romanlauren@email.com", "branislavignas@email.com"};
+
+    //     for (int i = 0; i < NUMBER_OF_USERS; i++) {
+    //         User user = new User();
+    //         user.setUsername(names[i]);
+    //         user.setEmail(emails[i]);
+    //         user.setPassword("1234");
+    //         user.setRole(Role.usr);
+    //         user.setCreatedAt(Instant.now());
+    //         user.setUpdatedAt(Instant.now());
+    //         mongoTemplate.insert(user);
+    //     }
+    // }
+
+    // @AfterEach
+    // public void dropCollection() {
+    //     mongoTemplate.getCollection("users").drop();
+    // }
+
+    // @AfterAll
+    // public static void dropDb() {
+    //     LOG.info("Finished executing UserService tests");
+    //     mongoTemplate.getDb().drop();
+    // }
+
+    // @Test
+    // public void shouldReturnAListOfAllUsers() {
+    //     List<UserDTO> users = userService.findAll();
+    //     System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + mongoTemplate.getDb().getName());
+    //     System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + mongoTemplate.getCollectionName(User.class));
+    //     assertThat(users).isNotEmpty();
+    // }
+    
+    // @Test
+    // public void shouldNotBeNull() {
+    //     List<UserDTO> users = userService.findAll();
+    //     assertThat(users).isNotNull();
+    // }
+    
+    // @Test
+    // public void shouldContain5Users() {
+    //     List<UserDTO> users = userService.findAll();
+    //     assertThat(users).hasSize(5);
+    // }
 }
