@@ -10,9 +10,9 @@ name: Janblog CI with Maven
 
 on:
   push:
-    branches: [ "main", "github-workflow" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main", "github-workflow" ]  
+    branches: [ "main" ]  
 
 jobs:  
   build:
