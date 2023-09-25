@@ -17,7 +17,6 @@ on:
 jobs:  
   build:
     runs-on: ubuntu-latest
-
     services:
       mongodb:
         image: mongo:latest
