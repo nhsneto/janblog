@@ -15,19 +15,19 @@ on:
     branches: [ "main" ]
 
 jobs:
-
-  build:
-
+  mongodb-job:
     runs-on: ubuntu-latest
-
     services:
-      mongo:
-        image: mongo
+      mongodb:
+        image: mongo:latest
         ports:
           - "27017:27017"
         volumes:
           - ~/data/db
-
+  
+  build:
+    needs: mongodb-job
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
