@@ -9,6 +9,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.Instant;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
+@TestPropertySource(properties = {"spring.data.mongodb.database = janblog-test"})
 class UserServiceTest {
 
     @Autowired
@@ -61,6 +63,7 @@ class UserServiceTest {
     @Test
     public void shouldReturnAListOfAllUsers() {
         List<UserDTO> users = userService.findAll();
-        assertThat(users).isNotEmpty();
+        int totalOfUsers = 5;
+        assertThat(users).hasSize(totalOfUsers);
     }
 }
