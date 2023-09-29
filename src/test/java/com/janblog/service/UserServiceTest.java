@@ -1,12 +1,14 @@
 package com.janblog.service;
 
 import com.janblog.dto.UserDTO;
+import com.janblog.model.Role;
 import com.janblog.repository.UserPopulator;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+import java.time.Instant;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -50,5 +52,13 @@ class UserServiceTest {
         String existingId = "65135df93f90656e284ca8d8";
         UserDTO user = userService.findById(existingId);
         assertThat(user.id()).isEqualTo(existingId);
+    }
+
+    @Test
+    public void shouldSaveUser() {
+        UserDTO user = new UserDTO(null, "newuser", "newuser@email.com", "newuser1234",
+                Role.usr, Instant.now(), Instant.now());
+        UserDTO savedUser = userService.save(user);
+        assertThat(savedUser.id()).isNotNull();
     }
 }
