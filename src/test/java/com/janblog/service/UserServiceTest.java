@@ -44,4 +44,11 @@ class UserServiceTest {
         List<UserDTO> users = userService.findAll();
         assertThat(users).hasSize(populator.getNumberOfUsers());
     }
+
+    @Test
+    public void shouldReturnAUser_byGivingAnExistingID() {
+        String existingId = "65135df93f90656e284ca8d8";
+        UserDTO user = userService.findById(existingId);
+        assertThat(user.id()).isEqualTo(existingId);
+    }
 }
