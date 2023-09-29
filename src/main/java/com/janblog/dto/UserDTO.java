@@ -2,8 +2,8 @@ package com.janblog.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.janblog.model.Role;
+import com.janblog.validation.Password;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -19,8 +19,7 @@ public record UserDTO(
                 message = "Invalid email address. Email should be in someone@example.com format")
         String email,
         @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-        @Size(min = 8, max = 128, message = "Password must be between 8 and 128 characters long")
-        @Pattern(regexp = "^[\\p{ASCII}]{8,128}$", message = "Password must have ASCII characters only")
+        @Password
         String password,
         @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         Role role,
