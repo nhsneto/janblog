@@ -1,6 +1,7 @@
 package com.janblog.service;
 
 import com.janblog.dto.UserDTO;
+import com.janblog.exception.UserException;
 import com.janblog.mapper.UserMapper;
 import com.janblog.model.Role;
 import com.janblog.model.User;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 @Service
@@ -27,7 +27,7 @@ public class UserService {
 
     public UserDTO findById(String id) {
         User user = userRepo.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("User with id=" + id + " was not found"));
+                .orElseThrow(() -> new UserException("User with id=" + id + " was not found"));
         return UserMapper.toUserDTO(user);
     }
 
