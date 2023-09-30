@@ -38,11 +38,6 @@ public class UserController {
                 .body(userService.save(dto));
     }
 
-    @PutMapping("/{id}")
-    public UserDTO update(@PathVariable String id, @RequestBody @Valid UserDTO dto) {
-        return userService.update(id, dto);
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable String id) {
         userService.deleteById(id);

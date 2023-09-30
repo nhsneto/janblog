@@ -50,6 +50,7 @@ public class UserService {
             throw new PasswordException("Old Password does not match");
         }
         user.setPassword(dto.newPassword());
+        user.setUpdatedAt(Instant.now());
         userRepo.save(user);
     }
 
@@ -59,15 +60,8 @@ public class UserService {
             throw new EmailException("Old email does not match");
         }
         user.setEmail(dto.newEmail().toLowerCase());
-        userRepo.save(user);
-    }
-
-    public UserDTO update(String id, UserDTO updated) {
-        User user = UserMapper.toUser(findById(id));
-        user.setUsername(updated.username());
-        user.setEmail(updated.email());
         user.setUpdatedAt(Instant.now());
-        return UserMapper.toUserDTO(userRepo.save(user));
+        userRepo.save(user);
     }
 
     public void deleteById(String id) {
