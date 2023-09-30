@@ -3,8 +3,8 @@ package com.janblog.validation;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import jakarta.validation.constraints.Size;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
@@ -15,7 +15,7 @@ import static java.lang.annotation.ElementType.*;
 @Constraint(validatedBy = PasswordValidator.class)
 @Target({METHOD, FIELD, TYPE, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
-@Document
+@Documented
 public @interface Password {
 
     String message() default "Password must have ASCII characters only";
