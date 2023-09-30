@@ -1,6 +1,8 @@
 package com.janblog.service;
 
+import com.janblog.dto.PasswordDTO;
 import com.janblog.dto.UserDTO;
+import com.janblog.exception.PasswordException;
 import com.janblog.exception.UserException;
 import com.janblog.mapper.UserMapper;
 import com.janblog.model.Role;
@@ -38,6 +40,15 @@ public class UserService {
         user.setCreatedAt(Instant.now());
         user.setUpdatedAt(Instant.now());
         return UserMapper.toUserDTO(userRepo.save(user));
+    }
+
+    public void changePassword(String id, PasswordDTO dto) {
+        User user = UserMapper.toUser(findById(id));
+        if (!user.getPassword().equals(dto.oldPassword())) {
+            throw new PasswordException("Old Password does not match");
+        }
+        user.setPassword(dto.newPassword());
+        userRepo.save(user);
     }
 
     public UserDTO update(String id, UserDTO updated) {

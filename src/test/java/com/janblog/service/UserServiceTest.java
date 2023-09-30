@@ -1,5 +1,6 @@
 package com.janblog.service;
 
+import com.janblog.dto.PasswordDTO;
 import com.janblog.dto.UserDTO;
 import com.janblog.model.Role;
 import com.janblog.repository.UserPopulator;
@@ -60,5 +61,20 @@ class UserServiceTest {
                 Role.usr, Instant.now(), Instant.now());
         UserDTO savedUser = userService.save(user);
         assertThat(savedUser.id()).isNotNull();
+    }
+
+    @Test
+    public void shouldChangeUsersPassword() {
+        String userId = "65135df93f90656e284ca8dc";
+        UserDTO user = userService.findById(userId);
+
+        String oldPassword = user.password();
+        String newPassword = "newpassword";
+        PasswordDTO dto = new PasswordDTO(oldPassword, newPassword);
+
+        userService.changePassword(userId, dto);
+
+        UserDTO userWithChangedPassword = userService.findById(userId);
+        assertThat(userWithChangedPassword.password()).isNotEqualTo(oldPassword);
     }
 }

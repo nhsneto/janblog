@@ -1,5 +1,6 @@
 package com.janblog.controller.v1;
 
+import com.janblog.dto.PasswordDTO;
 import com.janblog.dto.UserDTO;
 import com.janblog.service.UserService;
 import jakarta.validation.Valid;
@@ -45,5 +46,11 @@ public class UserController {
     public ResponseEntity<?> deleteById(@PathVariable String id) {
         userService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/change-password")
+    public ResponseEntity<?> changePassword(@PathVariable String id, @RequestBody @Valid PasswordDTO dto) {
+        userService.changePassword(id, dto);
+        return ResponseEntity.ok().build();
     }
 }
