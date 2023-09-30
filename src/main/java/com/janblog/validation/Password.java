@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.*;
 
-@Size(min = 8, max = 128, message = "Password must be between 8 and 128 characters long")
+@Size(min = 6, max = 128, message = "Password must be between 6 and 128 characters long")
 @Constraint(validatedBy = PasswordValidator.class)
 @Target({METHOD, FIELD, TYPE, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)

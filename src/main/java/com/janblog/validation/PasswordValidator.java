@@ -9,7 +9,7 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
 
     @Override
     public boolean isValid(String password, ConstraintValidatorContext constraintValidatorContext) {
-        String validEmailRegex = "^[\\p{ASCII}]{8,128}$";
+        String validEmailRegex = "^[\\p{ASCII}]*$";
         return password == null || Pattern.compile(validEmailRegex).matcher(password).matches();
     }
 }
