@@ -1,7 +1,9 @@
 package com.janblog.service;
 
+import com.janblog.dto.EmailDTO;
 import com.janblog.dto.PasswordDTO;
 import com.janblog.dto.UserDTO;
+import com.janblog.exception.EmailException;
 import com.janblog.exception.PasswordException;
 import com.janblog.exception.UserException;
 import com.janblog.mapper.UserMapper;
@@ -48,6 +50,15 @@ public class UserService {
             throw new PasswordException("Old Password does not match");
         }
         user.setPassword(dto.newPassword());
+        userRepo.save(user);
+    }
+
+    public void changeEmail(String id, EmailDTO dto) {
+        User user = UserMapper.toUser(findById(id));
+        if (!user.getEmail().equalsIgnoreCase(dto.oldEmail())) {
+            throw new EmailException("Old email does not match");
+        }
+        user.setEmail(dto.newEmail().toLowerCase());
         userRepo.save(user);
     }
 

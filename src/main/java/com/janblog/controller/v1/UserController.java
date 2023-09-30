@@ -1,5 +1,6 @@
 package com.janblog.controller.v1;
 
+import com.janblog.dto.EmailDTO;
 import com.janblog.dto.PasswordDTO;
 import com.janblog.dto.UserDTO;
 import com.janblog.service.UserService;
@@ -51,6 +52,12 @@ public class UserController {
     @PostMapping("/{id}/change-password")
     public ResponseEntity<?> changePassword(@PathVariable String id, @RequestBody @Valid PasswordDTO dto) {
         userService.changePassword(id, dto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{id}/change-email")
+    public ResponseEntity<?> changeEmail(@PathVariable String id, @RequestBody @Valid EmailDTO dto) {
+        userService.changeEmail(id, dto);
         return ResponseEntity.ok().build();
     }
 }

@@ -1,5 +1,6 @@
 package com.janblog.service;
 
+import com.janblog.dto.EmailDTO;
 import com.janblog.dto.PasswordDTO;
 import com.janblog.dto.UserDTO;
 import com.janblog.model.Role;
@@ -76,5 +77,20 @@ class UserServiceTest {
 
         UserDTO userWithChangedPassword = userService.findById(userId);
         assertThat(userWithChangedPassword.password()).isNotEqualTo(oldPassword);
+    }
+
+    @Test
+    public void shouldChangeUsersEmail() {
+        String userId = "65135e1b3f90656e284ca8d9";
+        UserDTO user = userService.findById(userId);
+
+        String oldEmail = user.email();
+        String newEmail = "newemail@email.com";
+        EmailDTO dto = new EmailDTO(oldEmail, newEmail);
+
+        userService.changeEmail(userId, dto);
+
+        UserDTO userWithChangedEmail = userService.findById(userId);
+        assertThat(userWithChangedEmail.email()).isNotEqualTo(oldEmail);
     }
 }
