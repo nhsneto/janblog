@@ -103,4 +103,12 @@ class UserServiceTest {
                 .isThrownBy(() -> userService.findById(userId))
                 .withMessage("User with id=" + userId + " was not found");
     }
+
+    @Test
+    public void shouldFailWhenFindingUserByNotExistingId() {
+        String userId = "not_existing_id";
+        assertThatExceptionOfType(UserException.class)
+                .isThrownBy(() -> userService.findById(userId))
+                .withMessage("User with id=" + userId + " was not found");
+    }
 }
