@@ -51,7 +51,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void shouldReturnAUser_byGivingAnExistingID() {
+    public void shouldReturnUser_byGivingExistingID() {
         String existingId = "65135df93f90656e284ca8d8";
         UserDTO user = userService.findById(existingId);
         assertThat(user.id()).isEqualTo(existingId);
