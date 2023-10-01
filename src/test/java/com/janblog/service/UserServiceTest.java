@@ -3,6 +3,7 @@ package com.janblog.service;
 import com.janblog.dto.EmailDTO;
 import com.janblog.dto.PasswordDTO;
 import com.janblog.dto.UserDTO;
+import com.janblog.exception.UserException;
 import com.janblog.model.Role;
 import com.janblog.repository.UserPopulator;
 import org.junit.jupiter.api.*;
@@ -92,5 +93,14 @@ class UserServiceTest {
 
         UserDTO userWithChangedEmail = userService.findById(userId);
         assertThat(userWithChangedEmail.email()).isNotEqualTo(oldEmail);
+    }
+
+    @Test
+    public void shouldDeleteUser_byGivingAnExistingId() {
+        String userId = "65135e343f90656e284ca8db";
+        userService.deleteById(userId);
+        assertThatExceptionOfType(UserException.class)
+                .isThrownBy(() -> userService.findById(userId))
+                .withMessage("User with id=" + userId + " was not found");
     }
 }
