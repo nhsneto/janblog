@@ -111,4 +111,12 @@ class UserServiceTest {
                 .isThrownBy(() -> userService.findById(userId))
                 .withMessage("User with id=" + userId + " was not found");
     }
+
+    @Test
+    public void shouldFailWhenFindingUserByGivingNullId() {
+        String userId = null;
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> userService.findById(userId))
+                .withMessage("The given id must not be null");
+    }
 }
