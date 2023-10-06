@@ -33,10 +33,4 @@ public class UserMapper {
                 .map(UserMapper::toUserDTO)
                 .collect(Collectors.toList());
     }
-
-    public static List<User> toUserList(List<UserDTO> userDTOList) {
-        return userDTOList.stream()
-                .map(UserMapper::toUser)
-                .collect(Collectors.toList());
-    }
 }
