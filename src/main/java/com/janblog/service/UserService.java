@@ -10,12 +10,13 @@ import com.janblog.mapper.UserMapper;
 import com.janblog.model.Role;
 import com.janblog.model.User;
 import com.janblog.repository.UserRepository;
-import jakarta.validation.Valid;
+import jakarta.validation.*;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
+import java.util.StringJoiner;
 
 @Service
 public class UserService {
@@ -36,8 +37,20 @@ public class UserService {
         return UserMapper.toUserDTO(user);
     }
 
-    public UserDTO save(@Valid UserDTO dto) {
-        Objects.requireNonNull(dto.password(), "Password must not be null");
+    private <T> void validateDTO(T dto) {
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+        Set<ConstraintViolation<T>> violations = validator.validate(dto);
+        if (!violations.isEmpty()) {
+            StringJoiner sj = new StringJoiner("|");
+            for (ConstraintViolation<T> cv : violations) {
+                sj.add(cv.getMessage());
+            }
+            throw new ConstraintViolationException(sj.toString(), violations);
+        }
+    }
+
+    public UserDTO save(UserDTO dto) {
+        validateDTO(dto);
         User user = UserMapper.toUser(dto);
         user.setRole(Role.usr);
         user.setCreatedAt(Instant.now());
@@ -45,7 +58,8 @@ public class UserService {
         return UserMapper.toUserDTO(userRepo.save(user));
     }
 
-    public void changePassword(String id, @Valid PasswordDTO dto) {
+    public void changePassword(String id, PasswordDTO dto) {
+        validateDTO(dto);
         User user = UserMapper.toUser(findById(id));
         if (!user.getPassword().equals(dto.oldPassword())) {
             throw new PasswordException("Old Password does not match");
@@ -55,7 +69,8 @@ public class UserService {
         userRepo.save(user);
     }
 
-    public void changeEmail(String id, @Valid EmailDTO dto) {
+    public void changeEmail(String id, EmailDTO dto) {
+        validateDTO(dto);
         User user = UserMapper.toUser(findById(id));
         if (!user.getEmail().equalsIgnoreCase(dto.oldEmail())) {
             throw new EmailException("Old email does not match");

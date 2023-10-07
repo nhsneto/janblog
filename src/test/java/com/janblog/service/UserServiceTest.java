@@ -6,6 +6,7 @@ import com.janblog.dto.UserDTO;
 import com.janblog.exception.UserException;
 import com.janblog.model.Role;
 import com.janblog.repository.UserPopulator;
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -118,5 +119,41 @@ class UserServiceTest {
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> userService.findById(userId))
                 .withMessage("The given id must not be null");
+    }
+
+    @Test
+    public void savingUser_WithNoUsername_shouldFail() {
+        UserDTO user = new UserDTO(null, null, "newuser@email.com", "newuser1234",
+                Role.usr, Instant.now(), Instant.now());
+        assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(() -> userService.save(user))
+                .withMessage("Username is required");
+    }
+
+    @Test
+    public void savingUser_WithUsernameHavingLessThan6Characters_shouldFail() {
+        UserDTO user = new UserDTO(null, "userr", "newuser@email.com", "newuser1234",
+                Role.usr, Instant.now(), Instant.now());
+        assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(() -> userService.save(user))
+                .withMessage("Username must be between 6 and 30 characters long");
+    }
+
+    @Test
+    public void savingUser_WithUsernameHavingMoreThan30Characters_shouldFail() {
+        UserDTO user = new UserDTO(null, "uuuuuuuusssssseeeeeeeerrrrrrrrr", "newuser@email.com",
+                "newuser1234", Role.usr, Instant.now(), Instant.now());
+        assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(() -> userService.save(user))
+                .withMessage("Username must be between 6 and 30 characters long");
+    }
+
+    @Test
+    public void savingUser_WithUsernameStartingWithNumber_shouldFail() {
+        UserDTO user = new UserDTO(null, "1newuser", "newuser@email.com",
+                "newuser1234", Role.usr, Instant.now(), Instant.now());
+        assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(() -> userService.save(user))
+                .withMessage("Username must be alphanumeric and start with a letter");
     }
 }
