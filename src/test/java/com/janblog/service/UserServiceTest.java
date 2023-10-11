@@ -60,10 +60,20 @@ class UserServiceTest {
 
     @Test
     public void shouldSaveUser() {
-        UserDTO user = new UserDTO(null, "newuser", "newuser@email.com", "newuser1234",
-                Role.usr, Instant.now(), Instant.now());
+        String username = "newuser";
+        String email = "newuser@email.com";
+        String password = "newuser1234";
+
+        UserDTO user = new UserDTO(null, username, email, password, null, null, null);
         UserDTO savedUser = userService.save(user);
+
         assertThat(savedUser.id()).isNotNull();
+        assertThat(savedUser.username()).isEqualTo(username);
+        assertThat(savedUser.email()).isEqualTo(email);
+        assertThat(savedUser.password()).isEqualTo(password);
+        assertThat(savedUser.role()).isNotNull();
+        assertThat(savedUser.createdAt()).isNotNull();
+        assertThat(savedUser.updatedAt()).isNotNull();
     }
 
     @Test
