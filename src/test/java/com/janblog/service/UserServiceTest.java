@@ -193,7 +193,7 @@ class UserServiceTest {
                 .withMessage("Invalid email address. Email should be in someone@example.com format, " +
                         "and its local-part must be between 4 and 64 characters long");
     }
-    
+
     @Test
     public void savingUser_withEmailHavingMoreThan64CharactersInItsLocalPart_shouldFail() {
         UserDTO user = new UserDTO(null, "newuser",
@@ -203,5 +203,42 @@ class UserServiceTest {
                 .isThrownBy(() -> userService.save(user))
                 .withMessage("Invalid email address. Email should be in someone@example.com format, " +
                         "and its local-part must be between 4 and 64 characters long");
+    }
+
+    @Test
+    public void savingUser_withNoPassword_shouldFail() {
+        UserDTO user = new UserDTO(null, "newuser", "newuser@email.com", null, null,
+                null, null);
+        assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(() -> userService.save(user))
+                .withMessage("Password is required");
+    }
+
+    @Test
+    public void savingUser_withPasswordHavingLessThan6Characters_shouldFail() {
+        UserDTO user = new UserDTO(null, "newuser", "newuser@email.com", "12345",
+                null, null, null);
+        assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(() -> userService.save(user))
+                .withMessage("Password must be between 6 and 128 characters long");
+    }
+
+    @Test
+    public void savingUser_withPasswordHavingMoreThan128Characters_shouldFail() {
+        UserDTO user = new UserDTO(null, "newuser", "newuser@email.com",
+                "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789",
+                null, null, null);
+        assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(() -> userService.save(user))
+                .withMessage("Password must be between 6 and 128 characters long");
+    }
+
+    @Test
+    public void savingUser_withPasswordHavingNonASCIICharacters_shouldFail() {
+        UserDTO user = new UserDTO(null, "newuser", "newuser@email.com", "educação",
+                null, null, null);
+        assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(() -> userService.save(user))
+                .withMessage("Password must have ASCII characters only");
     }
 }
