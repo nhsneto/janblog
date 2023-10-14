@@ -241,4 +241,20 @@ class UserServiceTest {
                 .isThrownBy(() -> userService.save(user))
                 .withMessage("Password must have ASCII characters only");
     }
+
+    @Test
+    public void deletingUserById_withNoId_shouldFail() {
+        String userId = null;
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> userService.deleteById(userId))
+                .withMessage("The given id must not be null");
+    }
+
+    @Test
+    public void deletingUserById_withNonExistingId_shouldFail() {
+        String userId = "non existing id";
+        assertThatExceptionOfType(UserException.class)
+                .isThrownBy(() -> userService.deleteById(userId))
+                .withMessage("User with id=" + userId + " was not found");
+    }
 }
