@@ -130,7 +130,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void savingUser_WithNoUsername_shouldFail() {
+    public void savingUser_withNoUsername_shouldFail() {
         UserDTO user = new UserDTO(null, null, "newuser@email.com", "newuser1234",
                 null, null, null);
         assertThatExceptionOfType(ConstraintViolationException.class)
@@ -139,7 +139,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void savingUser_WithUsernameHavingLessThan6Characters_shouldFail() {
+    public void savingUser_withUsernameHavingLessThan6Characters_shouldFail() {
         UserDTO user = new UserDTO(null, "userr", "newuser@email.com", "newuser1234",
                 null, null, null);
         assertThatExceptionOfType(ConstraintViolationException.class)
@@ -148,7 +148,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void savingUser_WithUsernameHavingMoreThan30Characters_shouldFail() {
+    public void savingUser_withUsernameHavingMoreThan30Characters_shouldFail() {
         UserDTO user = new UserDTO(null, "uuuuuuuusssssseeeeeeeerrrrrrrrr", "newuser@email.com",
                 "newuser1234", null, null, null);
         assertThatExceptionOfType(ConstraintViolationException.class)
@@ -157,7 +157,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void savingUser_WithUsernameStartingWithNumber_shouldFail() {
+    public void savingUser_withUsernameStartingWithNumber_shouldFail() {
         UserDTO user = new UserDTO(null, "1newuser", "newuser@email.com",
                 "newuser1234", null, null, null);
         assertThatExceptionOfType(ConstraintViolationException.class)
