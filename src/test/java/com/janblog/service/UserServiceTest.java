@@ -164,4 +164,44 @@ class UserServiceTest {
                 .isThrownBy(() -> userService.save(user))
                 .withMessage("Username must be alphanumeric and start with a letter");
     }
+
+    @Test
+    public void savingUser_withNoEmail_shouldFail() {
+        UserDTO user = new UserDTO(null, "newuser", null, "newuser1234", null,
+                null, null);
+        assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(() -> userService.save(user))
+                .withMessage("Email is required");
+    }
+
+    @Test
+    public void savingUser_withBadFormattedEmail_shouldFail() {
+        UserDTO user = new UserDTO(null, "newuser", "a@a.a",
+                "newuser1234", null, null, null);
+        assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(() -> userService.save(user))
+                .withMessage("Invalid email address. Email should be in someone@example.com format, " +
+                        "and its local-part must be between 4 and 64 characters long");
+    }
+
+    @Test
+    public void savingUser_withEmailHavingLessThan4CharactersInItsLocalPart_shouldFail() {
+        UserDTO user = new UserDTO(null, "newuser", "aaa@email.br",
+                "newuser1234", null, null, null);
+        assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(() -> userService.save(user))
+                .withMessage("Invalid email address. Email should be in someone@example.com format, " +
+                        "and its local-part must be between 4 and 64 characters long");
+    }
+    
+    @Test
+    public void savingUser_withEmailHavingMoreThan64CharactersInItsLocalPart_shouldFail() {
+        UserDTO user = new UserDTO(null, "newuser",
+                "aaaaaaaaaabbbbbbbbbbccccccccccdddddddddd1111111111222222222233333@email.br",
+                "newuser1234", null, null, null);
+        assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(() -> userService.save(user))
+                .withMessage("Invalid email address. Email should be in someone@example.com format, " +
+                        "and its local-part must be between 4 and 64 characters long");
+    }
 }
