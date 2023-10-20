@@ -43,7 +43,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldReturnAListOfAllUsers() throws Exception {
+    public void shouldGetAllUsers() throws Exception {
         String jsonContent = "[{\"id\":\"65135df93f90656e284ca8d8\",\"username\":\"stengerald\",\"email\":\"stengerald@email.com\",\"role\":\"usr\",\"createdAt\":\"2023-10-19T02:13:12.498Z\",\"updatedAt\":\"2023-10-19T02:13:12.498Z\"}," +
                 "{\"id\":\"65135e1b3f90656e284ca8d9\",\"username\":\"ferdonanda\",\"email\":\"ferdonanda@email.com\",\"role\":\"usr\",\"createdAt\":\"2023-10-19T02:13:12.503Z\",\"updatedAt\":\"2023-10-19T02:13:12.503Z\"}," +
                 "{\"id\":\"65135e273f90656e284ca8da\",\"username\":\"danilojosef\",\"email\":\"danilojosef@email.com\",\"role\":\"usr\",\"createdAt\":\"2023-10-19T02:13:12.508Z\",\"updatedAt\":\"2023-10-19T02:13:12.508Z\"}," +
