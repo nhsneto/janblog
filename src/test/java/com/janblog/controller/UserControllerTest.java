@@ -10,6 +10,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -65,5 +66,16 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(jsonContent));
+    }
+
+    @Test
+    public void shouldSaveUser() throws Exception {
+        String userJson = "{\"username\":\"newuser\",\"password\":\"newuser1234\",\"email\":\"newuser@email.com\"}";
+
+        mockMvc.perform(post("/janblog/v1/users")
+                        .content(userJson)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 }
