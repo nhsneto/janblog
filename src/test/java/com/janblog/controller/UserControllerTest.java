@@ -55,4 +55,15 @@ public class UserControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(jsonContent));
     }
+
+    @Test
+    public void givinAnExistingId_shouldGetUser() throws Exception {
+        String userId = "65135e1b3f90656e284ca8d9";
+        String jsonContent = "{\"id\":\"65135e1b3f90656e284ca8d9\",\"username\":\"ferdonanda\",\"email\":\"ferdonanda@email.com\",\"role\":\"usr\",\"createdAt\":\"2023-10-19T02:13:12.503Z\",\"updatedAt\":\"2023-10-19T02:13:12.503Z\"}";
+
+        mockMvc.perform(get("/janblog/v1/users/" + userId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(jsonContent));
+    }
 }
