@@ -9,8 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -105,5 +104,13 @@ public class UserControllerTest {
                         .content(emailJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void shouldDeleteUser() throws Exception {
+        String userId = "65135df93f90656e284ca8dc";
+
+        mockMvc.perform(delete("/janblog/v1/users/" + userId))
+                .andExpect(status().isNoContent());
     }
 }
