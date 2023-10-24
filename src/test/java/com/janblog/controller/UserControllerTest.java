@@ -98,12 +98,16 @@ public class UserControllerTest {
     @Test
     public void shouldChangeUsersEmail() throws Exception {
         String userId = "65135df93f90656e284ca8d8";
-        String emailJson = "{\"oldEmail\":\"stengerald@email.com\",\"newEmail\":\"stengerald_newemail@email.com\"}";
+        String newEmail = "stengerald_newemail@email.com";
+        String emailJson = "{\"oldEmail\":\"stengerald@email.com\",\"newEmail\":\"" + newEmail + "\"}";
 
         mockMvc.perform(post("/janblog/v1/users/" + userId + "/change-email")
                         .content(emailJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+
+        mockMvc.perform(get("/janblog/v1/users/" + userId))
+                .andExpect(jsonPath("$.email").value(newEmail));
     }
 
     @Test
