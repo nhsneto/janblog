@@ -84,4 +84,26 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.createdAt").isNotEmpty())
                 .andExpect(jsonPath("$.updatedAt").isNotEmpty());
     }
+
+    @Test
+    public void shouldChangeUsersPassword() throws Exception {
+        String userId = "65135e343f90656e284ca8db";
+        String passwordJson = "{\"oldPassword\":\"123456\",\"newPassword\":\"romanlauren\"}";
+
+        mockMvc.perform(post("/janblog/v1/users/" + userId + "/change-password")
+                        .content(passwordJson)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void shouldChangeUsersEmail() throws Exception {
+        String userId = "65135df93f90656e284ca8d8";
+        String emailJson = "{\"oldEmail\":\"stengerald@email.com\",\"newEmail\":\"stengerald_newemail@email.com\"}";
+
+        mockMvc.perform(post("/janblog/v1/users/" + userId + "/change-email")
+                        .content(emailJson)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 }
