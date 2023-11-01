@@ -135,7 +135,7 @@ class UserServiceTest {
                 null, null, null);
         assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> userService.save(user))
-                .withMessage("Username is required");
+                .withMessage("username: Username is required");
     }
 
     @Test
@@ -144,7 +144,7 @@ class UserServiceTest {
                 null, null, null);
         assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> userService.save(user))
-                .withMessage("Username must be between 6 and 30 characters long");
+                .withMessage("username: Username must be between 6 and 30 characters long");
     }
 
     @Test
@@ -153,7 +153,7 @@ class UserServiceTest {
                 "newuser1234", null, null, null);
         assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> userService.save(user))
-                .withMessage("Username must be between 6 and 30 characters long");
+                .withMessage("username: Username must be between 6 and 30 characters long");
     }
 
     @Test
@@ -162,7 +162,7 @@ class UserServiceTest {
                 "newuser1234", null, null, null);
         assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> userService.save(user))
-                .withMessage("Username must be alphanumeric and start with a letter");
+                .withMessage("username: Username must be alphanumeric and start with a letter");
     }
 
     @Test
@@ -171,7 +171,7 @@ class UserServiceTest {
                 null, null);
         assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> userService.save(user))
-                .withMessage("Email is required");
+                .withMessage("email: Email is required");
     }
 
     @Test
@@ -180,7 +180,7 @@ class UserServiceTest {
                 "newuser1234", null, null, null);
         assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> userService.save(user))
-                .withMessage("Invalid email address. Email should be in someone@example.com format, " +
+                .withMessage("email: Invalid email address. Email should be in someone@example.com format, " +
                         "and its local-part must be between 4 and 64 characters long");
     }
 
@@ -190,7 +190,7 @@ class UserServiceTest {
                 "newuser1234", null, null, null);
         assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> userService.save(user))
-                .withMessage("Invalid email address. Email should be in someone@example.com format, " +
+                .withMessage("email: Invalid email address. Email should be in someone@example.com format, " +
                         "and its local-part must be between 4 and 64 characters long");
     }
 
@@ -201,7 +201,7 @@ class UserServiceTest {
                 "newuser1234", null, null, null);
         assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> userService.save(user))
-                .withMessage("Invalid email address. Email should be in someone@example.com format, " +
+                .withMessage("email: Invalid email address. Email should be in someone@example.com format, " +
                         "and its local-part must be between 4 and 64 characters long");
     }
 
@@ -211,7 +211,7 @@ class UserServiceTest {
                 null, null);
         assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> userService.save(user))
-                .withMessage("Password is required");
+                .withMessage("password: Password is required");
     }
 
     @Test
@@ -220,7 +220,7 @@ class UserServiceTest {
                 null, null, null);
         assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> userService.save(user))
-                .withMessage("Password must be between 6 and 128 characters long");
+                .withMessage("password: Password must be between 6 and 128 characters long");
     }
 
     @Test
@@ -230,7 +230,7 @@ class UserServiceTest {
                 null, null, null);
         assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> userService.save(user))
-                .withMessage("Password must be between 6 and 128 characters long");
+                .withMessage("password: Password must be between 6 and 128 characters long");
     }
 
     @Test
@@ -239,7 +239,7 @@ class UserServiceTest {
                 null, null, null);
         assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> userService.save(user))
-                .withMessage("Password must have ASCII characters only");
+                .withMessage("password: Password must have ASCII characters only");
     }
 
     @Test

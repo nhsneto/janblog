@@ -41,11 +41,7 @@ public class UserService {
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<T>> violations = validator.validate(dto);
         if (!violations.isEmpty()) {
-            StringJoiner sj = new StringJoiner("|");
-            for (ConstraintViolation<T> cv : violations) {
-                sj.add(cv.getMessage());
-            }
-            throw new ConstraintViolationException(sj.toString(), violations);
+            throw new ConstraintViolationException(violations);
         }
     }
 
