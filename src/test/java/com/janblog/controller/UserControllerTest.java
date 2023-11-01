@@ -117,4 +117,17 @@ public class UserControllerTest {
         mockMvc.perform(delete("/janblog/v1/users/" + userId))
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    public void givingNonExistingId_shouldNotGetUser() throws Exception {
+        String userId = "nonExistingId";
+
+        mockMvc.perform(get("/janblog/v1/users/" + userId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.status").value("400 bad request"))
+                .andExpect(jsonPath("$.errors").value("User with id=" + userId + " was not found"));
+    }
 }
