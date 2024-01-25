@@ -130,4 +130,18 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.status").value("400 bad request"))
                 .andExpect(jsonPath("$.errors").value("User with id=" + userId + " was not found"));
     }
+
+    @Test
+    public void savingUser_withNoUsername_shouldFail() throws Exception {
+        String userJson = "{\"password\":\"newuser1234\",\"email\":\"newuser@email.com\"}";
+
+        mockMvc.perform(post("/janblog/v1/users")
+                        .content(userJson)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.status").value("400 bad request"))
+                .andExpect(jsonPath("$.errors").value("Username is required"));
+    }
 }
