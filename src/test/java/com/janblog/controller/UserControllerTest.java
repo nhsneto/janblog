@@ -127,7 +127,8 @@ public class UserControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.timestamp").isNotEmpty())
-                .andExpect(jsonPath("$.status").value("400 bad request"))
+                .andExpect(jsonPath("$.title").value("Bad Request"))
+                .andExpect(jsonPath("$.status").value("400"))
                 .andExpect(jsonPath("$.errors").value("User with id=" + userId + " was not found"));
     }
 
@@ -141,7 +142,8 @@ public class UserControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.timestamp").isNotEmpty())
-                .andExpect(jsonPath("$.status").value("400 bad request"))
+                .andExpect(jsonPath("$.title").value("Bad Request"))
+                .andExpect(jsonPath("$.status").value("400"))
                 .andExpect(jsonPath("$.errors").value("Username is required"));
     }
 }

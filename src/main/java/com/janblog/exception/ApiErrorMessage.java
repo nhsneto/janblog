@@ -9,18 +9,21 @@ import java.util.List;
 public class ApiErrorMessage {
 
     private final Instant timestamp;
-    private final String status;
+    private final String title;
+    private final int status;
     private final List<String> errors;
 
     public ApiErrorMessage(HttpStatus status, List<String> messages) {
         this.timestamp = Instant.now();
-        this.status = status.toString().replace('_', ' ').toLowerCase();
+        this.title = status.getReasonPhrase();
+        this.status = status.value();
         this.errors = messages;
     }
 
     public ApiErrorMessage(HttpStatus status, String message) {
         this.timestamp = Instant.now();
-        this.status = status.toString().replace('_', ' ').toLowerCase();
+        this.title = status.getReasonPhrase();
+        this.status = status.value();
         this.errors = Collections.singletonList(message);
     }
 
@@ -28,7 +31,11 @@ public class ApiErrorMessage {
         return timestamp;
     }
 
-    public String getStatus() {
+    public String getTitle() {
+        return title;
+    }
+
+    public int getStatus() {
         return status;
     }
 
