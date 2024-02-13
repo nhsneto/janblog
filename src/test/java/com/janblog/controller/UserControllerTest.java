@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -145,5 +146,22 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.title").value("Bad Request"))
                 .andExpect(jsonPath("$.status").value("400"))
                 .andExpect(jsonPath("$.errors").value("Username is required"));
+    }
+
+    @Test
+    public void savingUser_withBlankUsername_shouldFail() throws Exception {
+        String userJson = "{\"username\":\"\",\"password\":\"newuser1234\",\"email\":\"newuser@email.com\"}";
+
+        mockMvc.perform(post("/janblog/v1/users")
+                        .content(userJson)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.title").value("Bad Request"))
+                .andExpect(jsonPath("$.status").value("400"))
+                .andExpect(jsonPath("$.errors",
+                        containsInAnyOrder("Username must be between 6 and 30 characters long",
+                                "Username must be alphanumeric and start with a letter")));
     }
 }
