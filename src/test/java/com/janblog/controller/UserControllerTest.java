@@ -320,4 +320,22 @@ public class UserControllerTest {
                         .value("Invalid email address. Email should be in someone@example.com format, " +
                                 "and its local-part must be between 4 and 64 characters long"));
     }
+
+    @Test
+    public void savingUser_withEmailHavingMoreThan64CharactersInItsLocalPart_shouldFail() throws Exception {
+        String userJson = "{\"username\":\"johndoe\",\"password\":\"user1234\"," +
+                "\"email\":\"aaaaaaaaaabbbbbbbbbbcccccccccc11111111112222222222333333333344444@email.com\"}";
+
+        mockMvc.perform(post("/janblog/v1/users")
+                        .content(userJson)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.title").value("Bad Request"))
+                .andExpect(jsonPath("$.status").value("400"))
+                .andExpect(jsonPath("$.errors")
+                        .value("Invalid email address. Email should be in someone@example.com format, " +
+                                "and its local-part must be between 4 and 64 characters long"));
+    }
 }
