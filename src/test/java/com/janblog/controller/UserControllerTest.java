@@ -338,4 +338,11 @@ public class UserControllerTest {
                         .value("Invalid email address. Email should be in someone@example.com format, " +
                                 "and its local-part must be between 4 and 64 characters long"));
     }
+
+    @Test
+    public void deletingUserById_withNoId_shouldFail() throws Exception {
+        mockMvc.perform(delete("/janblog/v1/users/")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 }
