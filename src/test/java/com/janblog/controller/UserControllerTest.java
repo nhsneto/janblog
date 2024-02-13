@@ -239,4 +239,21 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.status").value("400"))
                 .andExpect(jsonPath("$.errors").value("Password must be between 6 and 128 characters long"));
     }
+
+    @Test
+    public void savingUser_withPasswordHavingMoreThan128Characters_shouldFail() throws Exception {
+        String userJson = "{\"username\":\"johndoe\"," +
+                "\"password\":\"1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijk\"," +
+                "\"email\":\"newuser@email.com\"}";
+
+        mockMvc.perform(post("/janblog/v1/users")
+                        .content(userJson)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.title").value("Bad Request"))
+                .andExpect(jsonPath("$.status").value("400"))
+                .andExpect(jsonPath("$.errors").value("Password must be between 6 and 128 characters long"));
+    }
 }
