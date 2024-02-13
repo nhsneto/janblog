@@ -286,4 +286,21 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.status").value("400"))
                 .andExpect(jsonPath("$.errors").value("Email is required"));
     }
+
+    @Test
+    public void savingUser_withBadFormattedEmail_shouldFail() throws Exception {
+        String userJson = "{\"username\":\"johndoe\",\"password\":\"user1234\",\"email\":\"e@e.e\"}";
+
+        mockMvc.perform(post("/janblog/v1/users")
+                        .content(userJson)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.title").value("Bad Request"))
+                .andExpect(jsonPath("$.status").value("400"))
+                .andExpect(jsonPath("$.errors")
+                        .value("Invalid email address. Email should be in someone@example.com format, " +
+                                "and its local-part must be between 4 and 64 characters long"));
+    }
 }
